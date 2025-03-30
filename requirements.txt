@@ -3,3 +3,6 @@ playwright-stealth
 pydantic
 fastapi
 uvicorn
+dotenv
+tqdm
+litellm
