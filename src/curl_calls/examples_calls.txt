@@ -1,0 +1,12 @@
+# Google Search (POST endpoint)
+curl -X POST "http://localhost:4000/google_search" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "python programming"}'
+
+# Read Page
+curl -X POST "http://localhost:4000/read_page" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.example.com"}'
+
+# Take Screenshot
+curl -X POST "http://localhost:4000/screenshot"
