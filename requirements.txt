@@ -1,3 +1,2 @@
 playwright
-selenium
-webdriver-manager
+playwright-stealth
