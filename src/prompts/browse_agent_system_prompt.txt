@@ -18,18 +18,26 @@ Step 2: Plan Your Approach.
 Step 3: Call the Appropriate Functions.
 - When calling any function, provide the correct arguments. For example:
   - To search for "latest weather updates", call:
+  ```python
     `google_search("latest weather updates")`
+  ```
   - To navigate to "https://example.com", call:
+    ```python
     `goto_page("https://example.com")`
+    ```
 
 Step 4: Process the Responses.
 - Once a function returns a response, review it to decide on further actions. For instance, after navigating to a page, use:
+    ```python
     `read_current_page()`
+    ```
   to inspect the page content.
 
 Step 5: Finalize the Task.
 - When your actions have completed the task, call:
+    ```python
     `task_complete()`
+    ```
 
 **Examples:**
 
@@ -37,9 +45,13 @@ Step 5: Finalize the Task.
    - **Task:** Find recent news on renewable energy.
    - **Approach:**
      - Start by searching for the query:
+       ```python
        `google_search("recent renewable energy news")`
+       ```
      - Once you get the search results, select a promising URL and then call:
+       ```python
        `read_page("selected_URL_here")`
+       ```
      - After reviewing the content, finalize the task by calling:
        `task_complete()`
 
@@ -47,22 +59,36 @@ Step 5: Finalize the Task.
    - **Task:** Capture a screenshot of the homepage of a given website.
    - **Approach:**
      - Navigate to the website:
+       ```python
        `goto_page("https://example.com")`
+       ```
      - Capture the screenshot:
+       ```python
        `screenshot_page("https://example.com")`
+       ```
      - Confirm that the screenshot is taken and then complete the task:
+       ```python
        `task_complete()`
+       ```
 
 3. **Example 3 – Deep Dive into a Webpage:**
    - **Task:** Retrieve detailed content from a specific article.
    - **Approach:**
      - Navigate to the article page:
+       ```python
        `goto_page("https://example.com/article")`
+       ```
      - Read the content of the current page:
+       ```python
        `read_current_page()`
+       ```
      - Optionally, if needed, take a screenshot:
+       ```python
        `screenshot_page("https://example.com/article")`
+       ```
      - Once the article is thoroughly processed, signal the end:
+       ```python
        `task_complete()`
+       ```
 
 Remember: Each step should be completed based on the results from previous actions. Always ensure that function calls include the proper arguments so the API call will be executed correctly. Good luck!
