@@ -1,7 +1,6 @@
 '''
-this does not work right now
+Script to search Google and click on the first search result
 '''
-
 
 from playwright.sync_api import sync_playwright
 from playwright_stealth import stealth_sync
@@ -14,32 +13,25 @@ with sync_playwright() as p:
     page = context.new_page()
     stealth_sync(page)
     page.goto("https://www.google.com")
-    page.wait_for_timeout(10000)
 
     # search for something
     page.fill("textarea", "Playwright Python tutorial")
     page.keyboard.press("Enter")
     
-    # wait for page to load and specifically for search results
+    # Wait for search results to load
     page.wait_for_load_state("networkidle")
-
-    # timeout for 10 seconds
-    page.wait_for_timeout(10000)
-
-    # wait for div id search
-    page.wait_for_selector("div[id='search']")
-
-    # Use a more specific selector for actual search result links
-    links = page.query_selector_all("div[id='search'] div.g div.yuRUbf > a")
-    for link in links:
-        print(link.text_content())
-        print(link.get_attribute("href"))
-        print("---")
     
-    # note down html
-    html = page.content()
-    with open("data/gitignored/google_search_results.html", "w") as f:
-        f.write(html)
+    # Get all search result headings
+    search_results = page.query_selector_all("div[id='search'] h3")
+    
+    if search_results:
+        print(f"Found {len(search_results)} search results:")
+        for result in search_results:
+            print(f"- {result.inner_text()}")
+        # click on the second result
+        search_results[1].click()
+    else:
+        print("No search results found")
     
     # Keep the browser window open until user input
     input("Press Enter to close the browser...")
