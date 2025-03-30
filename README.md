@@ -6,5 +6,5 @@ make install
 
 run app
 ```
-uvicorn app:app --host 0.0.0.0 --port 4000 --reload
+uvicorn src.playwright_fastapi_app.app:app --host 0.0.0.0 --port 4000 --reload
 ```
