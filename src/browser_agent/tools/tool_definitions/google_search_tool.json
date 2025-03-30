@@ -1,0 +1,16 @@
+{
+    "type": "function",
+    "name": "google_search",
+    "description": "Searches Google for the provided query.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "The search query string."
+            }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+    }
+} 

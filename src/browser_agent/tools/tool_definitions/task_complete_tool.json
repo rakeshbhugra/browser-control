@@ -1,0 +1,11 @@
+{
+    "type": "function",
+    "name": "task_complete",
+    "description": "Signals that the current task has been completed.",
+    "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+    }
+} 

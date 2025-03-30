@@ -1,0 +1,16 @@
+{
+    "type": "function",
+    "name": "goto_page",
+    "description": "Navigates to the specified URL.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "url": {
+                "type": "string",
+                "description": "The URL to navigate to."
+            }
+        },
+        "required": ["url"],
+        "additionalProperties": false
+    }
+} 
