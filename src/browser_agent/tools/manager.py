@@ -2,7 +2,7 @@ import importlib
 import os
 import inspect
 import asyncio
-
+from src.interfaces.tool_response import ToolResponse
 class ToolFuncsManager:
     def __init__(self):
         self.tool_mapping = {}
@@ -32,13 +32,13 @@ class ToolFuncsManager:
                 except ImportError as e:
                     print(f"Error importing {module_path}: {e}")
 
-    async def tool_call(self, tool_name: str, tool_args: dict) -> str:
+    async def tool_call(self, tool_name: str, tool_args: dict) -> ToolResponse:
         if tool_name not in self.tool_mapping:
             return f"Error: Tool '{tool_name}' not found"
         
         tool_func = self.tool_mapping[tool_name]
         try:
-            return await tool_func(**tool_args)
+            return ToolResponse(text_response=await tool_func(**tool_args))
         except Exception as e:
             return f"Error executing {tool_name}: {str(e)}"
 
