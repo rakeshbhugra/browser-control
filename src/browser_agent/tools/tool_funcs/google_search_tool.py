@@ -1,7 +1,7 @@
 from src.interfaces.tool_response import ToolResponse
 from playwright.sync_api import Page
 from crawl4ai import AsyncWebCrawler
-
+import os
 async def crawl_raw_html(raw_html: str):
     raw_html_url = f"raw:{raw_html}"
     
@@ -28,10 +28,11 @@ async def google_search_tool(query: str, page: Page) -> ToolResponse:
     
     # read page html
     raw_html = await page.content()
-    with open("raw.html", "w") as f:
+    ignored_dir = 'data/gitignored'
+    with open(os.path.join(ignored_dir, "raw.html"), "w") as f:
         f.write(raw_html)
     search_results = await crawl_raw_html(raw_html)
-    with open('search_results.md', 'w') as f:
+    with open(os.path.join(ignored_dir, "search_results.md"), 'w') as f:
         f.write(search_results)
 
     return ToolResponse(text_response=search_results, tool_output=search_results)
