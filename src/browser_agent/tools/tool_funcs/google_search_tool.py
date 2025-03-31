@@ -1,7 +1,6 @@
 from src.interfaces.tool_response import ToolResponse
 from playwright.sync_api import Page
 from crawl4ai import AsyncWebCrawler
-from crawl4ai.async_configs import CrawlerRunConfig
 
 async def crawl_raw_html(raw_html: str):
     raw_html_url = f"raw:{raw_html}"
@@ -18,17 +17,21 @@ async def google_search_tool(query: str, page: Page) -> ToolResponse:
     # This would typically use a search API or web scraping
     print(f"Searching Google for: {query}")
     
-    await page.goto("https://www.google.com", wait_until="networkidle")
+    await page.goto("https://www.bing.com")
+    await page.wait_for_timeout(1000)
     await page.fill("textarea", query)
     await page.keyboard.press("Enter")
+    await page.wait_for_timeout(10000)
 
     # wait for page to load
     await page.wait_for_selector("body")
     
     # read page html
     raw_html = await page.content()
-    with open("raw_html.txt", "w") as f:
+    with open("raw.html", "w") as f:
         f.write(raw_html)
     search_results = await crawl_raw_html(raw_html)
+    with open('search_results.md', 'w') as f:
+        f.write(search_results)
 
     return ToolResponse(text_response=search_results, tool_output=search_results)
