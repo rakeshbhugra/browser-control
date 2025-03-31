@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 class FunctionDetails(BaseModel):
@@ -15,7 +15,7 @@ class Event(BaseModel):
     role: str
     content: str
     message_type: str
-    function_details: FunctionDetails
+    function_details: Optional[FunctionDetails] = None
     event_timestamp: datetime
 
 class Events(BaseModel):
