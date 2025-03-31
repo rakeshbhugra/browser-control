@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List
+from datetime import datetime
 
 class FunctionDetails(BaseModel):
     name: str
@@ -15,6 +16,7 @@ class Event(BaseModel):
     content: str
     message_type: str
     function_details: FunctionDetails
+    event_timestamp: datetime
 
 class Events(BaseModel):
     events: List[Event]
