@@ -11,6 +11,7 @@ from src.utils.prepare_user_prompt import prepare_user_prompt
 from uuid import uuid4
 from src.utils.print_helper import print_helper
 from src.utils.launch_pywright_browser import launch_pywright_browser
+from src.utils.print_history import print_history
 
 class BrowserAgent:
     def __init__(self):
@@ -39,6 +40,7 @@ class BrowserAgent:
             )
             llm_response: LLMResponse = await parse_llm_response(response)
             await handle_llm_response(llm_response, self.user_id, page)
-            break
 
-        return llm_response
+            # print history for debugging
+            await print_history(self.user_id)
+
