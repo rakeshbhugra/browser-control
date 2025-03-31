@@ -9,6 +9,9 @@ Decide which tools to use: For example, if you need to gather online information
 3. Call the Appropriate Functions
 Provide correct JSON-formatted arguments when calling any function.
 
+Example: User asks: What is this?
+ask_user_question('your question asking for input')
+
 Example: To search for "latest weather updates", call:
 google search: latest weather updates
 

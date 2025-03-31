@@ -36,7 +36,7 @@ class BrowserAgent:
 async def main():
     agent = BrowserAgent()
     # response = await agent.run("How are you doing?")
-    response = await agent.run("What is latest news in India?")
+    response = await agent.run("Can you find me best sellers?")
     # print(response)
 
 if __name__ == "__main__":
