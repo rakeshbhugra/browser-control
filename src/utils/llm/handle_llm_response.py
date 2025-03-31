@@ -5,14 +5,15 @@ from src.interfaces.tool_response import ToolResponse
 from src.interfaces.events import Event, FunctionDetails
 from playwright.sync_api import Page
 from datetime import datetime
+from src.interfaces.context import Context
 
-async def handle_llm_response(llm_response: LLMResponse, user_id: str, page: Page):
+async def handle_llm_response(llm_response: LLMResponse, context: Context):
 
     if llm_response.function_name:
         function_name = llm_response.function_name
         function_args = llm_response.function_args
         # call the function
-        tool_response: ToolResponse = await tool_funcs_manager.tool_call(function_name, function_args, page)
+        tool_response: ToolResponse = await tool_funcs_manager.tool_call(function_name, function_args, context)
         print(tool_response)
         
         function_details = FunctionDetails(
@@ -22,7 +23,7 @@ async def handle_llm_response(llm_response: LLMResponse, user_id: str, page: Pag
         )
         
         event = Event(
-            user_id=user_id,
+            user_id=context.user_id,
             role="assistant",
             content=tool_response.text_response,
             message_type="function_call",
@@ -31,7 +32,7 @@ async def handle_llm_response(llm_response: LLMResponse, user_id: str, page: Pag
         )
     else:
         event = Event(
-            user_id=user_id,
+            user_id=context.user_id,
             role="assistant",
             content=llm_response.text_response,
             message_type="text",
@@ -40,3 +41,5 @@ async def handle_llm_response(llm_response: LLMResponse, user_id: str, page: Pag
 
     # save the event
     await sqlite_manager.create_event(event)
+
+    return event
