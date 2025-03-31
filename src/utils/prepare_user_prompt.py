@@ -10,4 +10,5 @@ async def prepare_user_prompt(user_input: str, user_id: str) -> str:
     user_prompt = ""
     for event in history:
         user_prompt += f"{event.role}: {event.content}\n"
+    user_prompt += f"User: {user_input}\n"
     return user_prompt
