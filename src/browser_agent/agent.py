@@ -9,15 +9,23 @@ from src.utils.get_this_from_config import get_this_from_runtime_config
 from src.utils.llm.handle_llm_response import handle_llm_response
 from src.utils.prepare_user_prompt import prepare_user_prompt
 from uuid import uuid4
+from src.utils.print_helper import print_helper
+from src.utils.launch_pywright_browser import launch_pywright_browser
 
 class BrowserAgent:
     def __init__(self):
         self.system_prompt = get_browser_agent_system_prompt()
         self.user_id = str(uuid4())
 
-    async def run(self, user_input):
+    async def run(self):
+        print_helper.line_print(color='cyan')
 
-        user_input = input("What can I do for you today?\n")
+        # initiate browser
+        playwright_instance, browser, page = await launch_pywright_browser()
+        print_helper.green_print("Welcome to the browser agent!\n")
+        
+        # user_input = input("What can I do for you today?\n")
+        user_input = "search for latest news in india"
 
         while True:
             user_prompt = await prepare_user_prompt(user_input, self.user_id)
@@ -30,17 +38,7 @@ class BrowserAgent:
                 tools=await get_all_tools()
             )
             llm_response: LLMResponse = await parse_llm_response(response)
-            await handle_llm_response(llm_response, self.user_id)
+            await handle_llm_response(llm_response, self.user_id, page)
             break
 
         return llm_response
-
-async def main():
-    agent = BrowserAgent()
-    # response = await agent.run("How are you doing?")
-    # response = await agent.run("Thank you you were very helpful")
-    response = await agent.run("What is the best selling product in India?")
-    # print(response)
-
-if __name__ == "__main__":
-    asyncio.run(main())
