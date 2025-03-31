@@ -2,6 +2,9 @@ import asyncio
 from playwright.async_api import async_playwright
 from src.experimental.playwright_learn.click_by_index import highlight_page, get_element_info, click_element, fill_input, remove_highlights
 import base64
+import json
+from datetime import datetime
+import os
 
 async def main():
     async with async_playwright() as p:
@@ -18,19 +21,34 @@ async def main():
         with open("screenshot.png", "wb") as f:
             f.write(base64.b64decode(screenshot_base64))
         
-        # Get information about all elements
-        print("\nGetting information about elements:")
+        # Create directory for element info if it doesn't exist
+        os.makedirs("element_info", exist_ok=True)
+        
+        # Generate timestamp for unique filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"element_info/elements_{timestamp}.txt"
+        
+        # Get information about all elements and write to file
+        print(f"\nWriting element information to {filename}")
         element_count = await page.evaluate("window.highlightedElements.length")
-        for i in range(element_count):
-            info = await get_element_info(page, i)
-            if info:
-                print(f"\nElement {i}:")
-                for key, value in info.items():
-                    if value is not None:  # Only print non-null values
-                        print(f"  {key}: {value}")
         
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(f"Page URL: {page.url}\n")
+            f.write(f"Total Elements Found: {element_count}\n")
+            f.write("-" * 80 + "\n\n")
+            
+            for i in range(element_count):
+                info = await get_element_info(page, i)
+                if info:
+                    f.write(f"Element {i}:\n")
+                    # Sort keys for consistent output
+                    for key in sorted(info.keys()):
+                        value = info[key]
+                        if value is not None:  # Only write non-null values
+                            f.write(f"  {key}: {value}\n")
+                    f.write("\n")
         
-        await page.get_by_label('Check-in date').click()
+        print(f"Element information has been saved to {filename}")
         
         while True:
             print("\nWhat would you like to do?")
@@ -63,7 +81,7 @@ async def main():
             else:
                 print("Invalid choice. Please try again.")
             
-
+            input("\nPress Enter to continue...")
         
         # Remove highlights when done
         await remove_highlights(page)
