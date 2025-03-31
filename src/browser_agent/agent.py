@@ -2,7 +2,7 @@ import asyncio
 
 from src.utils.get_browser_agent_system_prompt import get_browser_agent_system_prompt
 from src.utils.llm.openai_call import get_openai_completion
-from src.browser_agent.tools.tools import get_all_tools
+from src.browser_agent.tools.get_all_tools import get_all_tools
 from src.utils.llm.parse_llm_response import parse_llm_response
 from src.interfaces.llm_response import LLMResponse
 from src.utils.get_this_from_config import get_this_from_runtime_config
