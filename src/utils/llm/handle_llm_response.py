@@ -1,20 +1,9 @@
 from src.interfaces.llm_response import LLMResponse
-import json
 
-async def handle_llm_response(response):
-    function_name = None
-    function_args = None
-    text = None
-    
-    if response[0].type == "function_call":
-        function_name = response[0].name
-        function_args = json.loads(response[0].arguments)
-        print(function_name, function_args)
+async def handle_llm_response(llm_response: LLMResponse):
+    if llm_response.function_name:
+        function_name = llm_response.function_name
+        function_args = llm_response.function_args
+        # call the function
     else:
-        text = response[0].content[0].text
-        print(text)
-    return LLMResponse(
-        function_name=function_name, 
-        function_args=function_args, 
-        text=text
-        )
+        return llm_response.text
