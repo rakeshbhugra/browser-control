@@ -3,6 +3,7 @@ from src.sqlite_manager.setup_sql import SessionLocal
 from typing import List
 from src.sqlite_manager.create_events_db import EventsDB
 from datetime import datetime
+import json
 
 async def get_previous_events(user_id: str) -> List[Event]:
     session = SessionLocal()
@@ -14,7 +15,7 @@ async def get_previous_events(user_id: str) -> List[Event]:
         # Create FunctionDetails object
         function_details = FunctionDetails(
             name=event_db.function_name,
-            args=event_db.function_args,
+            args=json.loads(event_db.function_args) if event_db.function_args else {},
             response=event_db.function_response
         )
         
