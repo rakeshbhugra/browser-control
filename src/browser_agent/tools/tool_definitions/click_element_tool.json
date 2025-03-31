@@ -1,0 +1,16 @@
+{
+    "type": "function",
+    "name": "click_element",
+    "description": "Given the element index list, clicks on the element with the provided index.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "index": {
+                "type": "integer",
+                "description": "The index of the element to click."
+            }
+        },
+        "required": ["index"],
+        "additionalProperties": false
+    }
+} 
