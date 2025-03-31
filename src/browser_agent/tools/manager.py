@@ -41,7 +41,11 @@ class ToolFuncsManager:
         
         tool_func = self.tool_mapping[tool_name]
         try:
-            return ToolResponse(text_response=await tool_func(**tool_args, page=page))
+            # TODO: add error handling here
+            tool_response = await tool_func(**tool_args, page=page)
+            # validate pydantic model
+            assert isinstance(tool_response, ToolResponse)
+            return tool_response
         except Exception as e:
             return f"Error executing {tool_name}: {str(e)}"
 
