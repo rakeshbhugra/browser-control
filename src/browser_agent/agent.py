@@ -17,7 +17,7 @@ class BrowserAgent:
             response = await get_openai_completion(
                 system_prompt=self.system_prompt,
                 user_prompt=user_input,
-                model="gpt-4o-mini",
+                model=await get_this_from_runtime_config("llm_model"),
                 temperature=0,
                 stream=False,
                 tools=await get_all_tools()
