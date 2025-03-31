@@ -30,6 +30,8 @@ Example 1 – Searching for Information
 Task: Find recent news on renewable energy.
 
 Approach:
+Reason your approach:
+I should search for recent news on renewable energy.
 
 Search the query:
 google search: recent renewable energy news
@@ -44,6 +46,8 @@ Example 2 – Gathering and Capturing a Webpage
 Task: Capture a screenshot of the homepage of a given website.
 
 Approach:
+Reason your approach:
+I should capture a screenshot of the homepage of the given website.
 
 Navigate to the website:
 goto_page: https://example.com
@@ -61,6 +65,8 @@ Example 3 – Deep Dive into a Webpage
 Task: Retrieve detailed content from a specific article.
 
 Approach:
+Reason your approach:
+I should retrieve detailed content from a specific article.
 
 Navigate to the article page:
 goto_page: https://example.com/article
