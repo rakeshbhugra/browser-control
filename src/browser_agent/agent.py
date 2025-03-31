@@ -21,18 +21,23 @@ class BrowserAgent:
                 stream=False,
                 tools=await get_all_tools()
             )
-            print(response)
-            function_name = response[0].name
-            function_args = response[0].arguments
-            print(function_name, function_args)
-            break
+            if response[0].type == "function_call":
+                print(response)
+                function_name = response[0].name
+                function_args = response[0].arguments
+                print(function_name, function_args)
+                break
+            else:
+                text = response[0].content[0].text
+                print(text)
+                break
         return response
 
 async def main():
     agent = BrowserAgent()
     # response = await agent.run("How are you doing?")
     response = await agent.run("What is latest news in India?")
-    print(response)
+    # print(response)
 
 if __name__ == "__main__":
     asyncio.run(main())
