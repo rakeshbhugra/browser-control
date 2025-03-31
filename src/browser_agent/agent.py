@@ -22,8 +22,8 @@ class BrowserAgent:
                 stream=False,
                 tools=await get_all_tools()
             )
-            llm_response: LLMResponse = await handle_llm_response(response)
-            print(llm_response.model_dump())
+            llm_response: LLMResponse = await parse_llm_response(response)
+            await handle_llm_response(llm_response)
             break
 
         return llm_response
