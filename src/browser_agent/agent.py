@@ -12,6 +12,7 @@ from uuid import uuid4
 from src.utils.print_helper import print_helper
 from src.utils.launch_pywright_browser import launch_pywright_browser
 from src.utils.print_history import print_history
+from src.interfaces.context import Context
 
 class BrowserAgent:
     def __init__(self):
@@ -23,13 +24,28 @@ class BrowserAgent:
 
         # initiate browser
         playwright_instance, browser, page = await launch_pywright_browser(use_proxy=False)
+        self.context: Context = Context(
+                user_id=self.user_id,
+                page=page,
+                page_content=None,
+                element_index_dict=None,
+                messages_for_llm="",
+                plan=None
+            )
         print_helper.green_print("Welcome to the browser agent!\n")
         
         # user_input = input("What can I do for you today?\n")
         user_input = "search for latest news in india"
 
+        # TODO: we'll add planning later
+        # if not self.context.plan:
+
+        if self.context.page_content and self.context.element_index_dict:
+            user_input += f'\n<page_text>{self.context.page_content}</page_text>\n'
+            user_input += f'\n<element_index>{self.context.element_index_dict}</element_index>\n'
+
         while True:
-            user_prompt = await prepare_user_prompt(user_input, self.user_id)
+            user_prompt = self.context.messages_for_llm
             response = await get_openai_completion(
                 system_prompt=self.system_prompt,
                 user_prompt=user_prompt,
@@ -39,7 +55,7 @@ class BrowserAgent:
                 tools=await get_all_tools()
             )
             llm_response: LLMResponse = await parse_llm_response(response)
-            await handle_llm_response(llm_response, self.user_id, page)
+            await handle_llm_response(llm_response, self.context)
 
             # print history for debugging
             await print_history(self.user_id)
