@@ -8,3 +8,4 @@ tqdm
 litellm
 openai
 configobj
+sqlalchemy
