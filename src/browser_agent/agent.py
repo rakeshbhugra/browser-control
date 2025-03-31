@@ -22,7 +22,7 @@ class BrowserAgent:
         print_helper.line_print(color='cyan')
 
         # initiate browser
-        playwright_instance, browser, page = await launch_pywright_browser()
+        playwright_instance, browser, page = await launch_pywright_browser(use_proxy=False)
         print_helper.green_print("Welcome to the browser agent!\n")
         
         # user_input = input("What can I do for you today?\n")
