@@ -13,3 +13,7 @@ install:
 	pip install -r requirements.txt; \
 	playwright install; \
 	'
+
+run:
+	conda activate $(ENV_NAME); \
+	python -m src.main
