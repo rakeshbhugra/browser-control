@@ -2,10 +2,11 @@ import asyncio
 
 from src.utils.get_browser_agent_system_prompt import get_browser_agent_system_prompt
 from src.utils.llm.openai_call import get_openai_completion
-from src.utils.parse_function import parse_function
 from src.interfaces.user import User
 from src.interfaces.messages import Messages
 from src.browser_agent.tools.tools import get_all_tools
+from src.utils.llm.handle_llm_response import handle_llm_response
+from src.interfaces.llm_response import LLMResponse
 
 class BrowserAgent:
     def __init__(self):
@@ -21,22 +22,17 @@ class BrowserAgent:
                 stream=False,
                 tools=await get_all_tools()
             )
-            if response[0].type == "function_call":
-                print(response)
-                function_name = response[0].name
-                function_args = response[0].arguments
-                print(function_name, function_args)
-                break
-            else:
-                text = response[0].content[0].text
-                print(text)
-                break
-        return response
+            llm_response: LLMResponse = await handle_llm_response(response)
+            print(llm_response.model_dump())
+            break
+
+        return llm_response
 
 async def main():
     agent = BrowserAgent()
     # response = await agent.run("How are you doing?")
-    response = await agent.run("Can you find me best sellers?")
+    # response = await agent.run("Thank you you were very helpful")
+    response = await agent.run("What is the best selling product in India?")
     # print(response)
 
 if __name__ == "__main__":
