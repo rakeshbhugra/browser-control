@@ -7,6 +7,7 @@ from src.utils.llm.parse_llm_response import parse_llm_response
 from src.interfaces.llm_response import LLMResponse
 from src.utils.get_this_from_config import get_this_from_runtime_config
 from src.utils.llm.handle_llm_response import handle_llm_response
+from src.utils.prepare_user_prompt import prepare_user_prompt
 from uuid import uuid4
 
 class BrowserAgent:
@@ -15,10 +16,14 @@ class BrowserAgent:
         self.user_id = str(uuid4())
 
     async def run(self, user_input):
+
+        user_input = input("What can I do for you today?\n")
+
         while True:
+            user_prompt = await prepare_user_prompt(user_input, self.user_id)
             response = await get_openai_completion(
                 system_prompt=self.system_prompt,
-                user_prompt=user_input,
+                user_prompt=user_prompt,
                 model=await get_this_from_runtime_config("llm_model"),
                 temperature=0,
                 stream=False,
