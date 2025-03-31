@@ -3,6 +3,9 @@ import os
 import inspect
 import asyncio
 from src.interfaces.tool_response import ToolResponse
+from src.utils.print_helper import print_helper
+from playwright.sync_api import Page
+
 class ToolFuncsManager:
     def __init__(self):
         self.tool_mapping = {}
@@ -28,17 +31,17 @@ class ToolFuncsManager:
                             # Extract the tool name (remove '_tool' suffix)
                             tool_name = name[:-5] if name.endswith('_tool') else name
                             self.tool_mapping[tool_name] = obj
-                            print(f"Loaded tool: {tool_name}")
+                            print_helper.cyan_print(f"Loaded tool: {tool_name}")
                 except ImportError as e:
-                    print(f"Error importing {module_path}: {e}")
+                    print_helper.red_print(f"Error importing {module_path}: {e}")
 
-    async def tool_call(self, tool_name: str, tool_args: dict) -> ToolResponse:
+    async def tool_call(self, tool_name: str, tool_args: dict, page: Page) -> ToolResponse:
         if tool_name not in self.tool_mapping:
             return f"Error: Tool '{tool_name}' not found"
         
         tool_func = self.tool_mapping[tool_name]
         try:
-            return ToolResponse(text_response=await tool_func(**tool_args))
+            return ToolResponse(text_response=await tool_func(**tool_args, page=page))
         except Exception as e:
             return f"Error executing {tool_name}: {str(e)}"
 
