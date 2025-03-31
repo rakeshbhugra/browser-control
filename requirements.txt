@@ -7,3 +7,4 @@ dotenv
 tqdm
 litellm
 openai
+configobj
