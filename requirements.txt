@@ -6,3 +6,4 @@ uvicorn
 dotenv
 tqdm
 litellm
+openai
