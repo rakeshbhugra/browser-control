@@ -4,7 +4,7 @@ import inspect
 import asyncio
 from src.interfaces.tool_response import ToolResponse
 from src.utils.print_helper import print_helper
-from playwright.sync_api import Page
+from src.interfaces.context import Context
 
 class ToolFuncsManager:
     def __init__(self):
@@ -35,14 +35,14 @@ class ToolFuncsManager:
                 except ImportError as e:
                     print_helper.red_print(f"Error importing {module_path}: {e}")
 
-    async def tool_call(self, tool_name: str, tool_args: dict, page: Page) -> ToolResponse:
+    async def tool_call(self, tool_name: str, tool_args: dict, context: Context) -> ToolResponse:
         if tool_name not in self.tool_mapping:
             return f"Error: Tool '{tool_name}' not found"
         
         tool_func = self.tool_mapping[tool_name]
         try:
             # TODO: add error handling here
-            tool_response = await tool_func(**tool_args, page=page)
+            tool_response = await tool_func(**tool_args, context=context)
             # validate pydantic model
             assert isinstance(tool_response, ToolResponse)
             return tool_response
