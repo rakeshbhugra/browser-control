@@ -10,3 +10,4 @@ openai
 configobj
 sqlalchemy
 colorama
+crawl4ai
