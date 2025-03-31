@@ -31,8 +31,8 @@ async def google_search_tool(query: str, page: Page) -> ToolResponse:
     ignored_dir = 'data/gitignored'
     with open(os.path.join(ignored_dir, "raw.html"), "w") as f:
         f.write(raw_html)
-    search_results = await crawl_raw_html(raw_html)
+    search_markdown = await crawl_raw_html(raw_html)
     with open(os.path.join(ignored_dir, "search_results.md"), 'w') as f:
-        f.write(search_results)
+        f.write(search_markdown)
 
-    return ToolResponse(text_response=search_results, tool_output=search_results)
+    return ToolResponse(text_response=search_markdown, tool_output=search_markdown)
