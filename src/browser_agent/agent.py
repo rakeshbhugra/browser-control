@@ -7,10 +7,12 @@ from src.utils.llm.parse_llm_response import parse_llm_response
 from src.interfaces.llm_response import LLMResponse
 from src.utils.get_this_from_config import get_this_from_runtime_config
 from src.utils.llm.handle_llm_response import handle_llm_response
+from uuid import uuid4
 
 class BrowserAgent:
     def __init__(self):
         self.system_prompt = get_browser_agent_system_prompt()
+        self.user_id = str(uuid4())
 
     async def run(self, user_input):
         while True:
@@ -23,7 +25,7 @@ class BrowserAgent:
                 tools=await get_all_tools()
             )
             llm_response: LLMResponse = await parse_llm_response(response)
-            await handle_llm_response(llm_response)
+            await handle_llm_response(llm_response, self.user_id)
             break
 
         return llm_response
