@@ -89,8 +89,9 @@ class BrowserAgent:
         self.context.page_content = await self.context.page.evaluate("document.body.innerText")
         
         if self.context.page_content and self.context.element_index_dict:
-            system_prompt += f'\n\n\n<page_text>{self.context.page_content}</page_text>\n\n\n'
-            system_prompt += f'\n\n\n<element_index>{self.context.element_index_dict}</element_index>\n\n\n'
+            system_prompt += f'\n\n\n<current_url>\n{self.context.page.url}\n</current_url>\n\n\n'
+            system_prompt += f'\n\n\n<page_text>\n{self.context.page_content}\n</page_text>\n\n\n'
+            system_prompt += f'\n\n\n<element_index>\n{self.context.element_index_dict}\n</element_index>\n\n\n'
         with open(os.path.join("data/gitignored", "system_prompt.txt"), 'w') as f:
             f.write(system_prompt)
         return system_prompt
