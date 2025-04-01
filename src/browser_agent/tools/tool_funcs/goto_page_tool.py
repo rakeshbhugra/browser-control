@@ -1,11 +1,13 @@
 from src.interfaces.tool_response import ToolResponse
 from src.interfaces.context import Context
 import traceback
+from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 
 async def goto_page_tool(url: str, context: Context) -> ToolResponse:
     try:
-        await context.page.goto(url)
         print(f"Navigating to URL: {url}")
+        # Continue with whatever we have after 5 seconds, don't wait for full load
+        await context.page.goto(url, timeout=5000, wait_until='domcontentloaded')
         return ToolResponse(
             text_response = f"Navigation completed, Now we're on {url}",
             tool_output = "",
