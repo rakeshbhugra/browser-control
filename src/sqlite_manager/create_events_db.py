@@ -1,10 +1,11 @@
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, Integer
 from src.sqlite_manager.setup_sql import engine, Base
 from src.interfaces.events import Event
 
 class EventsDB(Base):
     __tablename__ = "events"
-    user_id = Column(String, primary_key=True)
+    event_id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String, index=True)
     role = Column(String)
     content = Column(String)
     message_type = Column(String)
