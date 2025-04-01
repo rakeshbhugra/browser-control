@@ -45,7 +45,7 @@ class BrowserAgent:
         # initiate browser
         print_helper.green_print("Welcome to the browser agent!\n")
         
-        user_input = input("What can I do for you today?\n")
+        user_input = input("What can I do for you today?\nYou: ")
         # user_input = "search for latest news in india"
 
         # create user event and save
@@ -87,7 +87,7 @@ class BrowserAgent:
             print(f"Total time: {t3_handle_llm_response - t0_openai_call} seconds")
 
             if event.role == "agent_response":
-                user_input = input(event.content)
+                user_input = input(event.content+'\nYou: ')
                 await create_event(Event(
                     user_id=self.user_id,
                     role="user",
