@@ -7,7 +7,7 @@ async def goto_page_tool(url: str, context: Context) -> ToolResponse:
         await context.page.goto(url)
         print(f"Navigating to URL: {url}")
         return ToolResponse(
-            text_response = f"Navigated to {url}",
+            text_response = f"Navigation completed, Now we're on {url}",
             tool_output = "",
             tool_worked = True
         )
