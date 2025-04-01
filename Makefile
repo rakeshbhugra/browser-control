@@ -15,5 +15,8 @@ install:
 	'
 
 run:
+	/bin/bash -c '\
+	source $(MINICONDA_PATH)/etc/profile.d/conda.sh; \
 	conda activate $(ENV_NAME); \
-	python -m src.main
+	python -m src.main\
+	'
