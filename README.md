@@ -3,11 +3,24 @@
 A custom-built autonomous agent framework for browser automation, developed from scratch without relying on LangChain or LangGraph. This project demonstrates core concepts of building agentic systems while maintaining full control over the implementation.
 
 ## Demo
-![Phone Finder Demo](src/examples/phone-finder.gif)
-*Demo showing the agent searching for phones under ₹30,000*
 
-![LinkedIn Search Demo](src/examples/linkedin-search-example.gif)
-*Demo showing the agent performing LinkedIn profile search and company analysis*
+<div align="center">
+    <a href="https://www.loom.com/share/0dba3883fa4a4625a3b9387b8bf8c15c">
+      <p>Phone price comparison - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/0dba3883fa4a4625a3b9387b8bf8c15c">
+      <img style="max-width:600px;" src="https://cdn.loom.com/sessions/thumbnails/0dba3883fa4a4625a3b9387b8bf8c15c-474ed5470aaa606c-full-play.gif">
+    </a>
+</div>
+
+<div align="center">
+    <a href="https://www.loom.com/share/a9f29c977fec48c4b90779414744e4ff">
+      <p>company-research-example - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/a9f29c977fec48c4b90779414744e4ff">
+      <img style="max-width:600px;" src="https://cdn.loom.com/sessions/thumbnails/a9f29c977fec48c4b90779414744e4ff-69831ed2ff191b7a-full-play.gif">
+    </a>
+</div>
 
 ## Current Implementation
 - Custom agent framework with tool-based architecture
