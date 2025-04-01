@@ -16,6 +16,7 @@ from src.sqlite_manager.create_event import create_event
 from src.interfaces.events import Event
 from datetime import datetime
 from src.utils.draw_bounding_boxes_around_elements import draw_bounding_boxes_around_elements, DrawBoundingBoxesAroundElementsResponse
+from src.utils.planner import get_plan
 import os
 
 class BrowserAgent:
@@ -60,8 +61,8 @@ class BrowserAgent:
 
         self.context.messages_for_llm = f'User: {user_input}\n'
 
-        # TODO: we'll add planning later
-        # if not self.context.plan:
+        self.context.plan = await get_plan(user_input)
+        print_helper.green_print(f"Plan: {self.context.plan}")
 
         while True:
             system_prompt = await self.prepare_system_prompt()
@@ -105,6 +106,9 @@ class BrowserAgent:
         draw_bounding_boxes_around_elements_response: DrawBoundingBoxesAroundElementsResponse = await draw_bounding_boxes_around_elements(self.context.page, need_screenshot=False)
         self.context.element_index_dict = draw_bounding_boxes_around_elements_response.element_index_dict
         self.context.page_content = await self.context.page.evaluate("document.body.innerText")
+
+        if self.context.plan:
+            system_prompt += f'\n\n\n<plan>\n{self.context.plan}\n</plan>\n\n\n'
         
         if self.context.page_content and self.context.element_index_dict:
             system_prompt += f'\n\n\n<current_url>\n{self.context.page.url}\n</current_url>\n\n\n'
