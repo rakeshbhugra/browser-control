@@ -17,7 +17,7 @@ async def get_previous_events(user_id: str) -> List[Event]:
             name=event_db.function_name,
             args=json.loads(event_db.function_args) if event_db.function_args else {},
             response=event_db.function_response
-        )
+        ) if event_db.function_name else None
         
         # Create Event object
         event = Event(
