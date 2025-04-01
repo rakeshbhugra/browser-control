@@ -23,11 +23,10 @@ async def launch_pywright_browser(use_proxy=False):
     
     browser = await playwright.chromium.launch(
         headless=False,  # Make browser visible
-        args=['--start-maximized'],  # Start with maximized window
         proxy=proxy
     )
     context = await browser.new_context(
-        viewport=None,  # Remove viewport size restrictions
+        viewport={'width': 1920, 'height': 1080},  # Set viewport to 1920x1080
         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
     )
     page = await context.new_page()
