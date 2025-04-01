@@ -1,7 +1,7 @@
 {
     "type": "function",
     "name": "input_to_element",
-    "description": "Given the element index list, inputs the provided text to the element with the provided index.",
+    "description": "Given the element info, inputs the provided text to the element using Playwright's page.locator(locator).fill() method",
     "parameters": {
         "type": "object",
         "properties": {
@@ -9,12 +9,12 @@
                 "type": "string",
                 "description": "The text to input."
             },
-            "index": {
-                "type": "integer",
-                "description": "The index of the element to input the text to."
+            "locator": {
+                "type": "string",
+                "description": "The locator for the element to input text into."
             }
         },
-        "required": ["text", "index"],
+        "required": ["text", "locator"],
         "additionalProperties": false
     }
 } 
