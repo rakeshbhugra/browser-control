@@ -1,5 +1,4 @@
-import asyncio
-
+import time
 from src.utils.get_browser_agent_system_prompt import get_browser_agent_system_prompt
 from src.utils.llm.openai_call import get_openai_completion
 from src.browser_agent.tools.get_all_tools import get_all_tools
@@ -67,6 +66,7 @@ class BrowserAgent:
         while True:
             system_prompt = await self.prepare_system_prompt()
             user_prompt = await prepare_user_prompt(self.context)
+            t0_openai_call = time.time()
             response = await get_openai_completion(
                 system_prompt = system_prompt,
                 user_prompt = user_prompt,
@@ -75,8 +75,16 @@ class BrowserAgent:
                 stream = False,
                 tools = await get_all_tools(),
             )
+            t1_openai_call = time.time()
             llm_response: LLMResponse = await parse_llm_response(response)
+            t2_parse_llm_response = time.time()
             await handle_llm_response(llm_response, self.context)
+            t3_handle_llm_response = time.time()
+            print(f"Time taken for each step:")
+            print(f"OpenAI call: {t1_openai_call - t0_openai_call} seconds")
+            print(f"Parse LLM response: {t2_parse_llm_response - t1_openai_call} seconds")
+            print(f"Handle LLM response: {t3_handle_llm_response - t2_parse_llm_response} seconds")
+            print(f"Total time: {t3_handle_llm_response - t0_openai_call} seconds")
 
             # print history for debugging
             # await print_history(self.user_id)
