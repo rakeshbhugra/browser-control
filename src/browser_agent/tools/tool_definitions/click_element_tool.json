@@ -1,16 +1,16 @@
 {
     "type": "function",
     "name": "click_element",
-    "description": "Given the element index list, clicks on the element with the provided index.",
+    "description": "Given the element index list along with element info, you need to figure out locator for playwwright to click on it, we'll be using page.locator(locator).click() to click on it",
     "parameters": {
         "type": "object",
         "properties": {
-            "index": {
-                "type": "integer",
-                "description": "The index of the element to click."
+            "locator": {
+                "type": "string",
+                "description": "The locator for the element to click."
             }
         },
-        "required": ["index"],
+        "required": ["locator"],
         "additionalProperties": false
     }
 } 
