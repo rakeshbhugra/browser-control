@@ -1,8 +1,5 @@
 from src.interfaces.tool_response import ToolResponse
 from src.interfaces.context import Context
-import os
-import json
-from src.utils.draw_bounding_boxes_around_elements import draw_bounding_boxes_around_elements, DrawBoundingBoxesAroundElementsResponse
 import traceback
 
 async def google_search_tool(query: str, context: Context) -> ToolResponse:
