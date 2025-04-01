@@ -71,6 +71,9 @@ This is a proof-of-concept implementation with several pending improvements:
 ## Known Limitations
 - Even with proxy server configuration through BrightData, Google may still detect and block automated access
 
+## Development Process
+To understand the thought process and evolution of this project, please check the commit history. It provides detailed insights into how the implementation progressed and various design decisions made along the way.
+
 # If this submission is not good enough, please let me know. I will fix the issues.
 <p align="center">
   <img src="src/examples/hi5dojjie.png" width="300" alt="hi5dojjie">
