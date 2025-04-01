@@ -45,8 +45,8 @@ class BrowserAgent:
         # initiate browser
         print_helper.green_print("Welcome to the browser agent!\n")
         
-        # user_input = input("What can I do for you today?\n")
-        user_input = "search for latest news in india"
+        user_input = input("What can I do for you today?\n")
+        # user_input = "search for latest news in india"
 
         # create user event and save
         user_event = Event(
@@ -78,13 +78,23 @@ class BrowserAgent:
             t1_openai_call = time.time()
             llm_response: LLMResponse = await parse_llm_response(response)
             t2_parse_llm_response = time.time()
-            await handle_llm_response(llm_response, self.context)
+            event: Event =await handle_llm_response(llm_response, self.context)
             t3_handle_llm_response = time.time()
             print(f"Time taken for each step:")
             print(f"OpenAI call: {t1_openai_call - t0_openai_call} seconds")
             print(f"Parse LLM response: {t2_parse_llm_response - t1_openai_call} seconds")
             print(f"Handle LLM response: {t3_handle_llm_response - t2_parse_llm_response} seconds")
             print(f"Total time: {t3_handle_llm_response - t0_openai_call} seconds")
+
+            if event.role == "agent_response":
+                user_input = input(event.content)
+                await create_event(Event(
+                    user_id=self.user_id,
+                    role="user",
+                    content=user_input,
+                    message_type="text",
+                    event_timestamp=datetime.now()
+                ))
 
             # print history for debugging
             # await print_history(self.user_id)
